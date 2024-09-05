@@ -433,12 +433,6 @@ BOOL WINAPI RdpmcPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffini
 	return result;
 }
 
-#ifdef _M_X64
-extern "C" {
-void __fastcall _CPUIDx64(DWORD index, DWORD *pEAX, DWORD *pEBX, DWORD *pECX, DWORD *pEDX);
-}
-#endif
-
 BOOL WINAPI Cpuid(DWORD index, DWORD *pEAX, DWORD *pEBX, DWORD *pECX, DWORD *pEDX)
 {
 	if(pEAX == NULL || pEBX == NULL || pECX == NULL || pEDX == NULL || gIsCpuid == FALSE)
@@ -446,18 +440,12 @@ BOOL WINAPI Cpuid(DWORD index, DWORD *pEAX, DWORD *pEBX, DWORD *pECX, DWORD *pED
 		return FALSE;
 	}
 
-#ifdef _M_X64
-	*pECX = 0;
-	_CPUIDx64(index, pEAX, pEBX, pECX, pEDX);
-#else
 	int info[4];
-	__asm{mov ecx, 0}
-	__cpuid(info, index);
+	__cpuidex(info, index, 0);
 	*pEAX = info[0];
 	*pEBX = info[1];
 	*pECX = info[2];
 	*pEDX = info[3];
-#endif
 
 	return TRUE;
 }

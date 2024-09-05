@@ -15,24 +15,47 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OlsSample.cpp">
+    <None Include="OlsApi.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OlsSampleDlg.cpp">
+    <ClCompile Include="OlsApi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="OlsDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OlsSample.h">
+    <ClInclude Include="Driver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OlsSampleDlg.h">
+    <ClInclude Include="OlsApi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="OlsApiInit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OlsApiInitDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OlsApiInitExt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OlsDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OlsDll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OlsIoctl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -40,15 +63,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\OlsSample.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\OlsSample.rc2">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="OlsSample.rc">
+    <ResourceCompile Include="OlsDll.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

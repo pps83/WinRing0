@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 10
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinRing0SampleCpp", "sample\Cpp\OlsSample_2010.vcxproj", "{1E16E041-2C19-4257-8883-7A0D51623B31}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35209.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinRing0SampleCpp", "sample\Cpp\OlsSample.vcxproj", "{1E16E041-2C19-4257-8883-7A0D51623B31}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinRing0", "dll\WinRing0_2010.vcxproj", "{68FEADCC-D5C0-40A0-9F61-C82AB47CDA1D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinRing0", "dll\WinRing0.vcxproj", "{68FEADCC-D5C0-40A0-9F61-C82AB47CDA1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

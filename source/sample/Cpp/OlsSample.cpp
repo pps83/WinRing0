@@ -19,11 +19,6 @@
 #include "../../dll/OlsApiInit.h"
 #else // for Load-Time Dynamic Linking
 #include "../../dll/OlsApi.h"
-#ifdef _M_X64
-#pragma comment(lib, "../../../release/WinRing0x64.lib")
-#else
-#pragma comment(lib, "../../../release/WinRing0.lib")
-#endif
 #endif
 
 // COlsSampleApp

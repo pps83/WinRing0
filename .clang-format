@@ -1,0 +1,27 @@
+BasedOnStyle: LLVM
+
+AccessModifierOffset: -4
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortLambdasOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+BreakBeforeBraces: Allman
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+ColumnLimit: 120
+IndentCaseLabels: false
+SortIncludes: false
+IndentWidth: 4
+TabWidth: 4
+ObjCBlockIndentWidth: 4
+AlignAfterOpenBracket: DontAlign
+UseTab: Never
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: false
+AlignEscapedNewlines: Left
+AlwaysBreakTemplateDeclarations: Yes
+# AllowShortFunctionsOnASingleLine: false
+
+IndentExternBlock: NoIndent
