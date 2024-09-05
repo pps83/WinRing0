@@ -1,0 +1,10 @@
+.vs/
+msvc.build/
+*.vcxproj.user
+*.pdb
+*.exp
+*.lib
+*.dll
+*.exe
+
+
