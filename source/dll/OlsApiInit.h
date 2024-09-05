@@ -135,9 +135,17 @@ _SetOlsValue SetOlsValue = NULL;
 BOOL InitOpenLibSys(HMODULE *hModule)
 {
 #ifdef _M_X64
+#ifdef _DEBUG
+	*hModule = LoadLibrary(_T("WinRing0x64Debug.dll"));
+	if (*hModule == NULL)
+#endif
 	*hModule = LoadLibrary(_T("WinRing0x64.dll"));
 #else
-	*hModule = LoadLibrary(_T("WinRing0.dll"));
+#ifdef _DEBUG
+	*hModule = LoadLibrary(_T("WinRing0Debug.dll"));
+	if (*hModule == NULL)
+#endif
+        * hModule = LoadLibrary(_T("WinRing0.dll"));
 #endif
 
 	if(*hModule == NULL)
