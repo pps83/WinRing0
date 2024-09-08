@@ -93,96 +93,100 @@ _WritePhysicalMemory WritePhysicalMemory = NULL;
 
 BOOL InitOpenLibSys(HMODULE* hModule)
 {
-#ifdef _M_X64
+    HMODULE hmod = NULL;
+#if defined(_M_X64)
 #ifdef _DEBUG
-    *hModule = LoadLibrary(_T("WinRing0x64Debug.dll"));
-    if (*hModule == NULL)
+    hmod = LoadLibrary(_T("WinRing0x64Debug.dll"));
 #endif
-        *hModule = LoadLibrary(_T("WinRing0x64.dll"));
+    if (hmod == NULL)
+        hmod = LoadLibrary(_T("WinRing0x64.dll"));
+#elif defined(_M_IX86)
+#ifdef _DEBUG
+    hmod = LoadLibrary(_T("WinRing0Debug.dll"));
+#endif
+    if (hmod == NULL)
+        hmod = LoadLibrary(_T("WinRing0.dll"));
 #else
-#ifdef _DEBUG
-    *hModule = LoadLibrary(_T("WinRing0Debug.dll"));
-    if (*hModule == NULL)
-#endif
-        *hModule = LoadLibrary(_T("WinRing0.dll"));
+#error unsupported build target
 #endif
 
-    if (*hModule == NULL)
+    *hModule = hmod;
+    if (hmod == NULL)
     {
         return FALSE;
     }
 
-    GetDllStatus = (_GetDllStatus)GetProcAddress(*hModule, "GetDllStatus");
-    GetDllVersion = (_GetDllVersion)GetProcAddress(*hModule, "GetDllVersion");
-    GetDriverVersion = (_GetDriverVersion)GetProcAddress(*hModule, "GetDriverVersion");
-    GetDriverType = (_GetDriverType)GetProcAddress(*hModule, "GetDriverType");
+    GetDllStatus = (_GetDllStatus)GetProcAddress(hmod, "GetDllStatus");
+    GetDllVersion = (_GetDllVersion)GetProcAddress(hmod, "GetDllVersion");
+    GetDriverVersion = (_GetDriverVersion)GetProcAddress(hmod, "GetDriverVersion");
+    GetDriverType = (_GetDriverType)GetProcAddress(hmod, "GetDriverType");
 
-    InitializeOls = (_InitializeOls)GetProcAddress(*hModule, "InitializeOls");
-    DeinitializeOls = (_DeinitializeOls)GetProcAddress(*hModule, "DeinitializeOls");
+    InitializeOls = (_InitializeOls)GetProcAddress(hmod, "InitializeOls");
+    DeinitializeOls = (_DeinitializeOls)GetProcAddress(hmod, "DeinitializeOls");
 
-    IsCpuid = (_IsCpuid)GetProcAddress(*hModule, "IsCpuid");
-    IsMsr = (_IsMsr)GetProcAddress(*hModule, "IsMsr");
-    IsTsc = (_IsTsc)GetProcAddress(*hModule, "IsTsc");
-    Hlt = (_Hlt)GetProcAddress(*hModule, "Hlt");
-    Rdmsr = (_Rdmsr)GetProcAddress(*hModule, "Rdmsr");
-    Wrmsr = (_Wrmsr)GetProcAddress(*hModule, "Wrmsr");
-    Rdpmc = (_Rdpmc)GetProcAddress(*hModule, "Rdpmc");
-    Cpuid = (_Cpuid)GetProcAddress(*hModule, "Cpuid");
-    Rdtsc = (_Rdtsc)GetProcAddress(*hModule, "Rdtsc");
-    HltTx = (_HltTx)GetProcAddress(*hModule, "HltTx");
-    RdmsrTx = (_RdmsrTx)GetProcAddress(*hModule, "RdmsrTx");
-    WrmsrTx = (_WrmsrTx)GetProcAddress(*hModule, "WrmsrTx");
-    RdpmcTx = (_RdpmcTx)GetProcAddress(*hModule, "RdpmcTx");
-    CpuidTx = (_CpuidTx)GetProcAddress(*hModule, "CpuidTx");
-    RdtscTx = (_RdtscTx)GetProcAddress(*hModule, "RdtscTx");
-    HltPx = (_HltPx)GetProcAddress(*hModule, "HltPx");
-    RdmsrPx = (_RdmsrPx)GetProcAddress(*hModule, "RdmsrPx");
-    WrmsrPx = (_WrmsrPx)GetProcAddress(*hModule, "WrmsrPx");
-    RdpmcPx = (_RdpmcPx)GetProcAddress(*hModule, "RdpmcPx");
-    CpuidPx = (_CpuidPx)GetProcAddress(*hModule, "CpuidPx");
-    RdtscPx = (_RdtscPx)GetProcAddress(*hModule, "RdtscPx");
+    IsCpuid = (_IsCpuid)GetProcAddress(hmod, "IsCpuid");
+    IsMsr = (_IsMsr)GetProcAddress(hmod, "IsMsr");
+    IsTsc = (_IsTsc)GetProcAddress(hmod, "IsTsc");
+    Hlt = (_Hlt)GetProcAddress(hmod, "Hlt");
+    Rdmsr = (_Rdmsr)GetProcAddress(hmod, "Rdmsr");
+    Wrmsr = (_Wrmsr)GetProcAddress(hmod, "Wrmsr");
+    Rdpmc = (_Rdpmc)GetProcAddress(hmod, "Rdpmc");
+    Cpuid = (_Cpuid)GetProcAddress(hmod, "Cpuid");
+    Rdtsc = (_Rdtsc)GetProcAddress(hmod, "Rdtsc");
+    HltTx = (_HltTx)GetProcAddress(hmod, "HltTx");
+    RdmsrTx = (_RdmsrTx)GetProcAddress(hmod, "RdmsrTx");
+    WrmsrTx = (_WrmsrTx)GetProcAddress(hmod, "WrmsrTx");
+    RdpmcTx = (_RdpmcTx)GetProcAddress(hmod, "RdpmcTx");
+    CpuidTx = (_CpuidTx)GetProcAddress(hmod, "CpuidTx");
+    RdtscTx = (_RdtscTx)GetProcAddress(hmod, "RdtscTx");
+    HltPx = (_HltPx)GetProcAddress(hmod, "HltPx");
+    RdmsrPx = (_RdmsrPx)GetProcAddress(hmod, "RdmsrPx");
+    WrmsrPx = (_WrmsrPx)GetProcAddress(hmod, "WrmsrPx");
+    RdpmcPx = (_RdpmcPx)GetProcAddress(hmod, "RdpmcPx");
+    CpuidPx = (_CpuidPx)GetProcAddress(hmod, "CpuidPx");
+    RdtscPx = (_RdtscPx)GetProcAddress(hmod, "RdtscPx");
 
-    ReadIoPortByte = (_ReadIoPortByte)GetProcAddress(*hModule, "ReadIoPortByte");
-    ReadIoPortWord = (_ReadIoPortWord)GetProcAddress(*hModule, "ReadIoPortWord");
-    ReadIoPortDword = (_ReadIoPortDword)GetProcAddress(*hModule, "ReadIoPortDword");
+    ReadIoPortByte = (_ReadIoPortByte)GetProcAddress(hmod, "ReadIoPortByte");
+    ReadIoPortWord = (_ReadIoPortWord)GetProcAddress(hmod, "ReadIoPortWord");
+    ReadIoPortDword = (_ReadIoPortDword)GetProcAddress(hmod, "ReadIoPortDword");
 
-    ReadIoPortByteEx = (_ReadIoPortByteEx)GetProcAddress(*hModule, "ReadIoPortByteEx");
-    ReadIoPortWordEx = (_ReadIoPortWordEx)GetProcAddress(*hModule, "ReadIoPortWordEx");
-    ReadIoPortDwordEx = (_ReadIoPortDwordEx)GetProcAddress(*hModule, "ReadIoPortDwordEx");
+    ReadIoPortByteEx = (_ReadIoPortByteEx)GetProcAddress(hmod, "ReadIoPortByteEx");
+    ReadIoPortWordEx = (_ReadIoPortWordEx)GetProcAddress(hmod, "ReadIoPortWordEx");
+    ReadIoPortDwordEx = (_ReadIoPortDwordEx)GetProcAddress(hmod, "ReadIoPortDwordEx");
 
-    WriteIoPortByte = (_WriteIoPortByte)GetProcAddress(*hModule, "WriteIoPortByte");
-    WriteIoPortWord = (_WriteIoPortWord)GetProcAddress(*hModule, "WriteIoPortWord");
-    WriteIoPortDword = (_WriteIoPortDword)GetProcAddress(*hModule, "WriteIoPortDword");
+    WriteIoPortByte = (_WriteIoPortByte)GetProcAddress(hmod, "WriteIoPortByte");
+    WriteIoPortWord = (_WriteIoPortWord)GetProcAddress(hmod, "WriteIoPortWord");
+    WriteIoPortDword = (_WriteIoPortDword)GetProcAddress(hmod, "WriteIoPortDword");
 
-    WriteIoPortByteEx = (_WriteIoPortByteEx)GetProcAddress(*hModule, "WriteIoPortByteEx");
-    WriteIoPortWordEx = (_WriteIoPortWordEx)GetProcAddress(*hModule, "WriteIoPortWordEx");
-    WriteIoPortDwordEx = (_WriteIoPortDwordEx)GetProcAddress(*hModule, "WriteIoPortDwordEx");
+    WriteIoPortByteEx = (_WriteIoPortByteEx)GetProcAddress(hmod, "WriteIoPortByteEx");
+    WriteIoPortWordEx = (_WriteIoPortWordEx)GetProcAddress(hmod, "WriteIoPortWordEx");
+    WriteIoPortDwordEx = (_WriteIoPortDwordEx)GetProcAddress(hmod, "WriteIoPortDwordEx");
 
-    SetPciMaxBusIndex = (_SetPciMaxBusIndex)GetProcAddress(*hModule, "SetPciMaxBusIndex");
+    SetPciMaxBusIndex = (_SetPciMaxBusIndex)GetProcAddress(hmod, "SetPciMaxBusIndex");
 
-    ReadPciConfigByte = (_ReadPciConfigByte)GetProcAddress(*hModule, "ReadPciConfigByte");
-    ReadPciConfigWord = (_ReadPciConfigWord)GetProcAddress(*hModule, "ReadPciConfigWord");
-    ReadPciConfigDword = (_ReadPciConfigDword)GetProcAddress(*hModule, "ReadPciConfigDword");
+    ReadPciConfigByte = (_ReadPciConfigByte)GetProcAddress(hmod, "ReadPciConfigByte");
+    ReadPciConfigWord = (_ReadPciConfigWord)GetProcAddress(hmod, "ReadPciConfigWord");
+    ReadPciConfigDword = (_ReadPciConfigDword)GetProcAddress(hmod, "ReadPciConfigDword");
 
-    ReadPciConfigByteEx = (_ReadPciConfigByteEx)GetProcAddress(*hModule, "ReadPciConfigByteEx");
-    ReadPciConfigWordEx = (_ReadPciConfigWordEx)GetProcAddress(*hModule, "ReadPciConfigWordEx");
-    ReadPciConfigDwordEx = (_ReadPciConfigDwordEx)GetProcAddress(*hModule, "ReadPciConfigDwordEx");
+    ReadPciConfigByteEx = (_ReadPciConfigByteEx)GetProcAddress(hmod, "ReadPciConfigByteEx");
+    ReadPciConfigWordEx = (_ReadPciConfigWordEx)GetProcAddress(hmod, "ReadPciConfigWordEx");
+    ReadPciConfigDwordEx = (_ReadPciConfigDwordEx)GetProcAddress(hmod, "ReadPciConfigDwordEx");
 
-    WritePciConfigByte = (_WritePciConfigByte)GetProcAddress(*hModule, "WritePciConfigByte");
-    WritePciConfigWord = (_WritePciConfigWord)GetProcAddress(*hModule, "WritePciConfigWord");
-    WritePciConfigDword = (_WritePciConfigDword)GetProcAddress(*hModule, "WritePciConfigDword");
+    WritePciConfigByte = (_WritePciConfigByte)GetProcAddress(hmod, "WritePciConfigByte");
+    WritePciConfigWord = (_WritePciConfigWord)GetProcAddress(hmod, "WritePciConfigWord");
+    WritePciConfigDword = (_WritePciConfigDword)GetProcAddress(hmod, "WritePciConfigDword");
 
-    WritePciConfigByteEx = (_WritePciConfigByteEx)GetProcAddress(*hModule, "WritePciConfigByteEx");
-    WritePciConfigWordEx = (_WritePciConfigWordEx)GetProcAddress(*hModule, "WritePciConfigWordEx");
-    WritePciConfigDwordEx = (_WritePciConfigDwordEx)GetProcAddress(*hModule, "WritePciConfigDwordEx");
+    WritePciConfigByteEx = (_WritePciConfigByteEx)GetProcAddress(hmod, "WritePciConfigByteEx");
+    WritePciConfigWordEx = (_WritePciConfigWordEx)GetProcAddress(hmod, "WritePciConfigWordEx");
+    WritePciConfigDwordEx = (_WritePciConfigDwordEx)GetProcAddress(hmod, "WritePciConfigDwordEx");
 
-    FindPciDeviceById = (_FindPciDeviceById)GetProcAddress(*hModule, "FindPciDeviceById");
-    FindPciDeviceByClass = (_FindPciDeviceByClass)GetProcAddress(*hModule, "FindPciDeviceByClass");
+    FindPciDeviceById = (_FindPciDeviceById)GetProcAddress(hmod, "FindPciDeviceById");
+    FindPciDeviceByClass = (_FindPciDeviceByClass)GetProcAddress(hmod, "FindPciDeviceByClass");
 
 #ifdef _PHYSICAL_MEMORY_SUPPORT
-    ReadDmiMemory = (_ReadDmiMemory)GetProcAddress(*hModule, "ReadDmiMemory");
-    ReadPhysicalMemory = (_ReadPhysicalMemory)GetProcAddress(*hModule, "ReadPhysicalMemory");
-    WritePhysicalMemory = (_WritePhysicalMemory)GetProcAddress(*hModule, "WritePhysicalMemory");
+    ReadDmiMemory = (_ReadDmiMemory)GetProcAddress(hmod, "ReadDmiMemory");
+    ReadPhysicalMemory = (_ReadPhysicalMemory)GetProcAddress(hmod, "ReadPhysicalMemory");
+    WritePhysicalMemory = (_WritePhysicalMemory)GetProcAddress(hmod, "WritePhysicalMemory");
 #endif
 
     if (!(GetDllStatus && GetDllVersion && GetDriverVersion && GetDriverType && InitializeOls && DeinitializeOls &&

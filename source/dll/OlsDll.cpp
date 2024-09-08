@@ -218,8 +218,8 @@ DWORD InitDriverInfo()
             gDriverType = OLS_DRIVER_TYPE_WIN_NT;
         }
         return OLS_DLL_NO_ERROR;
-#elif defined(_M_ARM) || defined(_M_ARMT) || defined(_M_ARM64)
-#error ARM build is not implemented
+#else
+#error unsupported build target
 #endif
     }
     gDriverType = OLS_DRIVER_TYPE_UNKNOWN;
