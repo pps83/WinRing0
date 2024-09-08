@@ -169,9 +169,6 @@ void COlsSampleDlg::Refresh()
     edit += cstr;
     switch (GetDriverType())
     {
-    case OLS_DRIVER_TYPE_WIN_9X:
-        edit += _T("OLS_DRIVER_TYPE_WIN_9X\r\n");
-        break;
     case OLS_DRIVER_TYPE_WIN_NT:
         edit += _T("OLS_DRIVER_TYPE_WIN_NT\r\n");
         break;
@@ -180,9 +177,6 @@ void COlsSampleDlg::Refresh()
         break;
     case OLS_DRIVER_TYPE_WIN_NT_X64:
         edit += _T("OLS_DRIVER_TYPE_WIN_NT_X64\r\n");
-        break;
-    case OLS_DRIVER_TYPE_WIN_NT_IA64:
-        edit += _T("OLS_DRIVER_TYPE_WIN_NT_IA64\r\n");
         break;
     default:
         edit += _T("OLS_DRIVER_TYPE_UNKNOWN\r\n");

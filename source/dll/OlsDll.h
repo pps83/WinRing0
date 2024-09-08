@@ -16,10 +16,8 @@
 
 #define OLS_VERSION ((OLS_MAJOR_VERSION << 24) | (OLS_MINOR_VERSION << 16) | (OLS_REVISION << 8) | OLS_RELESE)
 
-#define OLS_DRIVER_FILE_NAME_WIN_9X _T("WinRing0.vxd")
 #define OLS_DRIVER_FILE_NAME_WIN_NT _T("WinRing0.sys")
 #define OLS_DRIVER_FILE_NAME_WIN_NT_X64 _T("WinRing0x64.sys")
-#define OLS_DRIVER_FILE_NAME_WIN_NT_IA64 _T("WinRing0ia64.sys") // Reserved
 
 DWORD Initialize();
 void Deinitialize();

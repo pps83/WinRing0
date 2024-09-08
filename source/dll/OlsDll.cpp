@@ -151,7 +151,7 @@ DWORD Initialize()
     }
     else
     {
-        gHandle = CreateFile(_T("\\\\.\\") OLS_DRIVER_FILE_NAME_WIN_9X, 0, 0, NULL, 0, FILE_FLAG_DELETE_ON_CLOSE, NULL);
+        gHandle = INVALID_HANDLE_VALUE;
 
         if (gHandle == INVALID_HANDLE_VALUE)
         {
@@ -200,55 +200,30 @@ DWORD InitDriverInfo()
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&osvi);
 
-    switch (osvi.dwPlatformId)
+    if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
-    case VER_PLATFORM_WIN32s:
-        gDriverType = OLS_DRIVER_TYPE_UNKNOWN;
-        return OLS_DLL_UNSUPPORTED_PLATFORM;
-        break;
-    case VER_PLATFORM_WIN32_WINDOWS:
-        _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_9X);
-        gDriverType = OLS_DRIVER_TYPE_WIN_9X;
-        return OLS_DLL_NO_ERROR;
-        break;
-    case VER_PLATFORM_WIN32_NT:
-#ifdef _WIN64
-#ifdef _M_X64
+#if defined(_M_X64)
         _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_NT_X64);
         gDriverType = OLS_DRIVER_TYPE_WIN_NT_X64;
-#else // IA64
-        _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_NT_IA64);
-        gDriverType = OLS_DRIVER_TYPE_WIN_NT_IA64;
-        return OLS_DLL_UNSUPPORTED_PLATFORM;
-#endif
-#else
-        if (IsWow64())
+        return OLS_DLL_NO_ERROR;
+#elif defined(_M_IX86)
+        if (IsWow64() && IsX64())
         {
-            if (IsX64())
-            {
-                _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_NT_X64);
-                gDriverType = OLS_DRIVER_TYPE_WIN_NT_X64;
-            }
-            else
-            {
-                _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_NT_IA64);
-                gDriverType = OLS_DRIVER_TYPE_WIN_NT_IA64;
-                return OLS_DLL_UNSUPPORTED_PLATFORM;
-            }
+            _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_NT_X64);
+            gDriverType = OLS_DRIVER_TYPE_WIN_NT_X64;
         }
         else
         {
             _tcscpy_s(gDriverFileName, MAX_PATH, OLS_DRIVER_FILE_NAME_WIN_NT);
             gDriverType = OLS_DRIVER_TYPE_WIN_NT;
         }
-#endif
         return OLS_DLL_NO_ERROR;
-        break;
-    default:
-        gDriverType = OLS_DRIVER_TYPE_UNKNOWN;
-        return OLS_DLL_UNKNOWN_ERROR;
-        break;
+#elif defined(_M_ARM) || defined(_M_ARMT) || defined(_M_ARM64)
+#error ARM build is not implemented
+#endif
     }
+    gDriverType = OLS_DRIVER_TYPE_UNKNOWN;
+    return OLS_DLL_UNKNOWN_ERROR;
 }
 
 BOOL IsCpuid()
