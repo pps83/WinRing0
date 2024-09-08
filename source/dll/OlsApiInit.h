@@ -91,23 +91,6 @@ _ReadPhysicalMemory ReadPhysicalMemory = NULL;
 _WritePhysicalMemory WritePhysicalMemory = NULL;
 #endif
 
-#ifdef _OPEN_LIB_SYS
-#ifdef _UNICODE
-#define GetOlsString GetOlsStringW
-#else
-#define GetOlsString GetOlsStringA
-#endif
-
-_InstallOpenLibSys InstallOpenLibSys = NULL;
-_UninstallOpenLibSys UninstallOpenLibSys = NULL;
-_GetDriverStatus GetDriverStatus = NULL;
-
-_GetOlsStringA GetOlsStringA = NULL;
-_GetOlsStringW GetOlsStringW = NULL;
-_GetOlsValue GetOlsValue = NULL;
-_SetOlsValue SetOlsValue = NULL;
-#endif
-
 BOOL InitOpenLibSys(HMODULE* hModule)
 {
 #ifdef _M_X64
