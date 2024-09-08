@@ -6,19 +6,11 @@
 //
 //                     Copyright 2007-2009 OpenLibSys.org. All rights reserved.
 //-----------------------------------------------------------------------------
-// for WinRing0 1.3.x
 
 #pragma once
 
 #include "OlsApiInitDef.h"
 
-//-----------------------------------------------------------------------------
-//
-// Externs
-//
-//-----------------------------------------------------------------------------
-
-// DLL
 extern _GetDllStatus GetDllStatus;
 extern _GetDllVersion GetDllVersion;
 extern _GetDriverVersion GetDriverVersion;
@@ -27,7 +19,6 @@ extern _GetDriverType GetDriverType;
 extern _InitializeOls InitializeOls;
 extern _DeinitializeOls DeinitializeOls;
 
-// CPU
 extern _IsCpuid IsCpuid;
 extern _IsMsr IsMsr;
 extern _IsTsc IsTsc;
@@ -53,7 +44,6 @@ extern _RdpmcPx RdpmcPx;
 extern _CpuidPx CpuidPx;
 extern _RdtscPx RdtscPx;
 
-// I/O
 extern _ReadIoPortByte ReadIoPortByte;
 extern _ReadIoPortWord ReadIoPortWord;
 extern _ReadIoPortDword ReadIoPortDword;
@@ -70,7 +60,6 @@ extern _WriteIoPortByteEx WriteIoPortByteEx;
 extern _WriteIoPortWordEx WriteIoPortWordEx;
 extern _WriteIoPortDwordEx WriteIoPortDwordEx;
 
-// PCI
 extern _SetPciMaxBusIndex SetPciMaxBusIndex;
 
 extern _ReadPciConfigByte ReadPciConfigByte;
@@ -92,7 +81,6 @@ extern _WritePciConfigDwordEx WritePciConfigDwordEx;
 extern _FindPciDeviceById FindPciDeviceById;
 extern _FindPciDeviceByClass FindPciDeviceByClass;
 
-// Memory
 #ifdef _PHYSICAL_MEMORY_SUPPORT
 extern _ReadDmiMemory ReadDmiMemory;
 extern _ReadPhysicalMemory ReadPhysicalMemory;

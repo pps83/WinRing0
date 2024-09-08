@@ -10,32 +10,23 @@
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "include 'stdafx.h' before including this file for PCH"
+#error "include 'stdafx.h' before including this file for PCH"
 #endif
-
-#include "resource.h"		// main symbols
-
-
-// COlsSampleApp:
-// See OlsSample.cpp for the implementation of this class
-//
+#include "resource.h"
 
 class COlsSampleApp : public CWinApp
 {
 public:
-	COlsSampleApp();
+    COlsSampleApp();
 
 #ifdef RUN_TIME_DYNAMIC_LINKING
-	HMODULE m_hOpenLibSys;
+    HMODULE m_hOpenLibSys;
 #endif
 
-// Overrides
-	public:
-	virtual BOOL InitInstance();
+public:
+    virtual BOOL InitInstance();
 
-// Implementation
-
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 extern COlsSampleApp theApp;

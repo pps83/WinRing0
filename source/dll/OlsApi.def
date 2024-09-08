@@ -1,4 +1,4 @@
-EXPORTS 
+EXPORTS
 
 GetDllStatus			@1
 GetDllVersion			@2

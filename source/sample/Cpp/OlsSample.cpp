@@ -21,67 +21,56 @@
 #include "../../dll/OlsApi.h"
 #endif
 
-// COlsSampleApp
-
 BEGIN_MESSAGE_MAP(COlsSampleApp, CWinApp)
-	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
+ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
-
-
-// COlsSampleApp construction
 
 COlsSampleApp::COlsSampleApp()
 {
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+    // TODO: add construction code here,
+    // Place all significant initialization in InitInstance
 }
-
-
-// The one and only COlsSampleApp object
 
 COlsSampleApp theApp;
 
-
-// COlsSampleApp initialization
-
 BOOL COlsSampleApp::InitInstance()
 {
-	// InitCommonControlsEx() is required on Windows XP if an application
-	// manifest specifies use of ComCtl32.dll version 6 or later to enable
-	// visual styles.  Otherwise, any window creation will fail.
-	INITCOMMONCONTROLSEX InitCtrls;
-	InitCtrls.dwSize = sizeof(InitCtrls);
-	// Set this to include all the common control classes you want to use
-	// in your application.
-	InitCtrls.dwICC = ICC_WIN95_CLASSES;
-	InitCommonControlsEx(&InitCtrls);
+    // InitCommonControlsEx() is required on Windows XP if an application
+    // manifest specifies use of ComCtl32.dll version 6 or later to enable
+    // visual styles.  Otherwise, any window creation will fail.
+    INITCOMMONCONTROLSEX InitCtrls;
+    InitCtrls.dwSize = sizeof(InitCtrls);
+    // Set this to include all the common control classes you want to use
+    // in your application.
+    InitCtrls.dwICC = ICC_WIN95_CLASSES;
+    InitCommonControlsEx(&InitCtrls);
 
-	CWinApp::InitInstance();
-
-#ifdef RUN_TIME_DYNAMIC_LINKING
-	m_hOpenLibSys = NULL;
-	if(! InitOpenLibSys(&m_hOpenLibSys))
-	{
-		AfxMessageBox(_T("DLL Load Error!!"));
-		return FALSE;
-	}
-#else
-	if(! InitializeOls())
-	{
-		AfxMessageBox(_T("Error InitializeOls()!!"));
-		return FALSE;
-	}
-#endif
-
-	COlsSampleDlg dlg;
-	m_pMainWnd = &dlg;
-	INT_PTR nResponse = dlg.DoModal();
+    CWinApp::InitInstance();
 
 #ifdef RUN_TIME_DYNAMIC_LINKING
-	DeinitOpenLibSys(&m_hOpenLibSys);
+    m_hOpenLibSys = NULL;
+    if (!InitOpenLibSys(&m_hOpenLibSys))
+    {
+        AfxMessageBox(_T("DLL Load Error!!"));
+        return FALSE;
+    }
 #else
-	DeinitializeOls();
+    if (!InitializeOls())
+    {
+        AfxMessageBox(_T("Error InitializeOls()!!"));
+        return FALSE;
+    }
 #endif
 
-	return FALSE;
+    COlsSampleDlg dlg;
+    m_pMainWnd = &dlg;
+    INT_PTR nResponse = dlg.DoModal();
+
+#ifdef RUN_TIME_DYNAMIC_LINKING
+    DeinitOpenLibSys(&m_hOpenLibSys);
+#else
+    DeinitializeOls();
+#endif
+
+    return FALSE;
 }
