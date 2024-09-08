@@ -27,3 +27,7 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
+#ifndef _WINDLL
+#define WINRING0_STATIC
+#endif

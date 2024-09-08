@@ -12,6 +12,7 @@
 #include <winioctl.h>
 #include <intrin.h>
 
+#include "OlsApi.h"
 #include "OlsIoctl.h"
 #include "OlsDll.h"
 #include "OlsDef.h"
@@ -31,24 +32,24 @@ DWORD gDllStatus = OLS_DLL_UNKNOWN_ERROR;
 DWORD gDriverType = OLS_DRIVER_TYPE_UNKNOWN;
 
 static BOOL IsNT();
-static BOOL IsCpuid();
-static BOOL IsMsr();
-static BOOL IsTsc();
+static BOOL IsCpuid_impl();
+static BOOL IsMsr_impl();
+static BOOL IsTsc_impl();
 static BOOL IsWow64();
 static BOOL IsX64();
 static BOOL IsFileExist(LPCTSTR fileName);
 static BOOL IsOnNetworkDrive(LPCTSTR fileName);
 
-BOOL WINAPI InitializeOls()
+WINRING0_API BOOL InitializeOls()
 {
     if (gInitDll == FALSE)
     {
         gIsNT = IsNT();
-        gIsCpuid = IsCpuid();
+        gIsCpuid = IsCpuid_impl();
         if (gIsCpuid)
         {
-            gIsMsr = IsMsr();
-            gIsTsc = IsTsc();
+            gIsMsr = IsMsr_impl();
+            gIsTsc = IsTsc_impl();
         }
         gDllStatus = InitDriverInfo();
 
@@ -70,7 +71,7 @@ BOOL WINAPI InitializeOls()
     return (BOOL)(gDllStatus == OLS_DLL_NO_ERROR);
 }
 
-VOID WINAPI DeinitializeOls()
+WINRING0_API VOID DeinitializeOls()
 {
     if (gInitDll == TRUE)
     {
@@ -226,7 +227,7 @@ DWORD InitDriverInfo()
     return OLS_DLL_UNKNOWN_ERROR;
 }
 
-BOOL IsCpuid()
+static BOOL IsCpuid_impl()
 {
     __try
     {
@@ -241,7 +242,7 @@ BOOL IsCpuid()
     return TRUE;
 }
 
-BOOL IsMsr()
+static BOOL IsMsr_impl()
 {
     // MSR : Standard Feature Flag EDX, Bit 5
     int info[4];
@@ -250,7 +251,7 @@ BOOL IsMsr()
     return ((info[3] >> 5) & 1);
 }
 
-BOOL IsTsc()
+static BOOL IsTsc_impl()
 {
     // TSC : Standard Feature Flag EDX, Bit 4
     int info[4];
@@ -259,7 +260,7 @@ BOOL IsTsc()
     return ((info[3] >> 4) & 1);
 }
 
-BOOL IsNT()
+static BOOL IsNT()
 {
     OSVERSIONINFO osvi;
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -270,7 +271,7 @@ BOOL IsNT()
 
 typedef BOOL(WINAPI* LPFN_ISWOW64PROCESS)(HANDLE hProcess, PBOOL Wow64Process);
 
-BOOL IsWow64()
+static BOOL IsWow64()
 {
     BOOL isWow64 = FALSE;
     LPFN_ISWOW64PROCESS fnIsWow64Process =
@@ -289,7 +290,7 @@ BOOL IsWow64()
 
 typedef void(WINAPI* LPFN_GETNATIVESYSTEMINFO)(LPSYSTEM_INFO lpSystemInfo);
 
-BOOL IsX64()
+static BOOL IsX64()
 {
     SYSTEM_INFO systemInfo;
     BOOL isX64 = FALSE;
@@ -304,7 +305,7 @@ BOOL IsX64()
     return isX64;
 }
 
-BOOL IsFileExist(LPCTSTR fileName)
+static BOOL IsFileExist(LPCTSTR fileName)
 {
     WIN32_FIND_DATA findData;
 
@@ -320,7 +321,7 @@ BOOL IsFileExist(LPCTSTR fileName)
     }
 }
 
-BOOL IsOnNetworkDrive(LPCTSTR fileName)
+static BOOL IsOnNetworkDrive(LPCTSTR fileName)
 {
     TCHAR root[4];
     root[0] = fileName[0];

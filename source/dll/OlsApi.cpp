@@ -36,7 +36,7 @@ extern DWORD gDllStatus;
 extern DWORD gDriverType;
 extern TCHAR gDriverPath[MAX_PATH];
 
-DWORD WINAPI GetDllStatus()
+WINRING0_API DWORD GetDllStatus()
 {
     if (gDllStatus == OLS_DLL_NO_ERROR && gDriverType >= OLS_DRIVER_TYPE_WIN_NT &&
         GetDriverVersion(NULL, NULL, NULL, NULL) == 0)
@@ -47,7 +47,7 @@ DWORD WINAPI GetDllStatus()
     return gDllStatus;
 }
 
-DWORD WINAPI GetDllVersion(PBYTE major, PBYTE minor, PBYTE revision, PBYTE release)
+WINRING0_API DWORD GetDllVersion(PBYTE major, PBYTE minor, PBYTE revision, PBYTE release)
 {
     if (major != NULL && minor != NULL && revision != NULL && release != NULL)
     {
@@ -60,7 +60,7 @@ DWORD WINAPI GetDllVersion(PBYTE major, PBYTE minor, PBYTE revision, PBYTE relea
     return OLS_VERSION;
 }
 
-DWORD WINAPI GetDriverVersion(PBYTE major, PBYTE minor, PBYTE revision, PBYTE release)
+WINRING0_API DWORD GetDriverVersion(PBYTE major, PBYTE minor, PBYTE revision, PBYTE release)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -92,27 +92,27 @@ DWORD WINAPI GetDriverVersion(PBYTE major, PBYTE minor, PBYTE revision, PBYTE re
     return value;
 }
 
-DWORD WINAPI GetDriverType()
+WINRING0_API DWORD GetDriverType()
 {
     return gDriverType;
 }
 
-BOOL WINAPI IsCpuid()
+WINRING0_API BOOL IsCpuid()
 {
     return gIsCpuid;
 }
 
-BOOL WINAPI IsMsr()
+WINRING0_API BOOL IsMsr()
 {
     return gIsMsr;
 }
 
-BOOL WINAPI IsTsc()
+WINRING0_API BOOL IsTsc()
 {
     return gIsTsc;
 }
 
-BOOL WINAPI Rdmsr(DWORD index, PDWORD eax, PDWORD edx)
+WINRING0_API BOOL Rdmsr(DWORD index, PDWORD eax, PDWORD edx)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -147,7 +147,7 @@ BOOL WINAPI Rdmsr(DWORD index, PDWORD eax, PDWORD edx)
     }
 }
 
-BOOL WINAPI RdmsrTx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
+WINRING0_API BOOL RdmsrTx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR mask = 0;
@@ -173,7 +173,7 @@ BOOL WINAPI RdmsrTx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR threadAffinit
     return result;
 }
 
-BOOL WINAPI RdmsrPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
+WINRING0_API BOOL RdmsrPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR processMask = 0;
@@ -200,7 +200,7 @@ BOOL WINAPI RdmsrPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffini
     return result;
 }
 
-BOOL WINAPI Wrmsr(DWORD index, DWORD eax, DWORD edx)
+WINRING0_API BOOL Wrmsr(DWORD index, DWORD eax, DWORD edx)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -234,7 +234,7 @@ BOOL WINAPI Wrmsr(DWORD index, DWORD eax, DWORD edx)
     }
 }
 
-BOOL WINAPI WrmsrTx(DWORD index, DWORD eax, DWORD edx, DWORD_PTR threadAffinityMask)
+WINRING0_API BOOL WrmsrTx(DWORD index, DWORD eax, DWORD edx, DWORD_PTR threadAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR mask = 0;
@@ -260,7 +260,7 @@ BOOL WINAPI WrmsrTx(DWORD index, DWORD eax, DWORD edx, DWORD_PTR threadAffinityM
     return result;
 }
 
-BOOL WINAPI WrmsrPx(DWORD index, DWORD eax, DWORD edx, DWORD_PTR processAffinityMask)
+WINRING0_API BOOL WrmsrPx(DWORD index, DWORD eax, DWORD edx, DWORD_PTR processAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR processMask = 0;
@@ -287,7 +287,7 @@ BOOL WINAPI WrmsrPx(DWORD index, DWORD eax, DWORD edx, DWORD_PTR processAffinity
     return result;
 }
 
-BOOL WINAPI Rdpmc(DWORD index, PDWORD eax, PDWORD edx)
+WINRING0_API BOOL Rdpmc(DWORD index, PDWORD eax, PDWORD edx)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -322,7 +322,7 @@ BOOL WINAPI Rdpmc(DWORD index, PDWORD eax, PDWORD edx)
     }
 }
 
-BOOL WINAPI RdpmcTx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
+WINRING0_API BOOL RdpmcTx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR mask = 0;
@@ -348,7 +348,7 @@ BOOL WINAPI RdpmcTx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR threadAffinit
     return result;
 }
 
-BOOL WINAPI RdpmcPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
+WINRING0_API BOOL RdpmcPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR processMask = 0;
@@ -375,7 +375,7 @@ BOOL WINAPI RdpmcPx(DWORD index, PDWORD eax, PDWORD edx, DWORD_PTR processAffini
     return result;
 }
 
-BOOL WINAPI Cpuid(DWORD index, DWORD* pEAX, DWORD* pEBX, DWORD* pECX, DWORD* pEDX)
+WINRING0_API BOOL Cpuid(DWORD index, DWORD* pEAX, DWORD* pEBX, DWORD* pECX, DWORD* pEDX)
 {
     if (pEAX == NULL || pEBX == NULL || pECX == NULL || pEDX == NULL || gIsCpuid == FALSE)
     {
@@ -392,7 +392,7 @@ BOOL WINAPI Cpuid(DWORD index, DWORD* pEAX, DWORD* pEBX, DWORD* pECX, DWORD* pED
     return TRUE;
 }
 
-BOOL WINAPI CpuidTx(DWORD index, PDWORD eax, PDWORD ebx, PDWORD ecx, PDWORD edx, DWORD_PTR threadAffinityMask)
+WINRING0_API BOOL CpuidTx(DWORD index, PDWORD eax, PDWORD ebx, PDWORD ecx, PDWORD edx, DWORD_PTR threadAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR mask = 0;
@@ -418,7 +418,7 @@ BOOL WINAPI CpuidTx(DWORD index, PDWORD eax, PDWORD ebx, PDWORD ecx, PDWORD edx,
     return result;
 }
 
-BOOL WINAPI CpuidPx(DWORD index, PDWORD eax, PDWORD ebx, PDWORD ecx, PDWORD edx, DWORD_PTR processAffinityMask)
+WINRING0_API BOOL CpuidPx(DWORD index, PDWORD eax, PDWORD ebx, PDWORD ecx, PDWORD edx, DWORD_PTR processAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR processMask = 0;
@@ -445,7 +445,7 @@ BOOL WINAPI CpuidPx(DWORD index, PDWORD eax, PDWORD ebx, PDWORD ecx, PDWORD edx,
     return result;
 }
 
-BOOL WINAPI Rdtsc(PDWORD eax, PDWORD edx)
+WINRING0_API BOOL Rdtsc(PDWORD eax, PDWORD edx)
 {
     if (eax == NULL || edx == NULL || gIsTsc == FALSE)
     {
@@ -461,7 +461,7 @@ BOOL WINAPI Rdtsc(PDWORD eax, PDWORD edx)
     return TRUE;
 }
 
-BOOL WINAPI RdtscTx(PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
+WINRING0_API BOOL RdtscTx(PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR mask = 0;
@@ -487,7 +487,7 @@ BOOL WINAPI RdtscTx(PDWORD eax, PDWORD edx, DWORD_PTR threadAffinityMask)
     return result;
 }
 
-BOOL WINAPI RdtscPx(PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
+WINRING0_API BOOL RdtscPx(PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR processMask = 0;
@@ -514,7 +514,7 @@ BOOL WINAPI RdtscPx(PDWORD eax, PDWORD edx, DWORD_PTR processAffinityMask)
     return result;
 }
 
-BOOL WINAPI Hlt()
+WINRING0_API BOOL Hlt()
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -536,7 +536,7 @@ BOOL WINAPI Hlt()
     }
 }
 
-BOOL WINAPI HltTx(DWORD_PTR threadAffinityMask)
+WINRING0_API BOOL HltTx(DWORD_PTR threadAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR mask = 0;
@@ -562,7 +562,7 @@ BOOL WINAPI HltTx(DWORD_PTR threadAffinityMask)
     return result;
 }
 
-BOOL WINAPI HltPx(DWORD_PTR processAffinityMask)
+WINRING0_API BOOL HltPx(DWORD_PTR processAffinityMask)
 {
     BOOL result = FALSE;
     DWORD_PTR processMask = 0;
@@ -589,7 +589,7 @@ BOOL WINAPI HltPx(DWORD_PTR processAffinityMask)
     return result;
 }
 
-BYTE WINAPI ReadIoPortByte(WORD port)
+WINRING0_API BYTE ReadIoPortByte(WORD port)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -606,7 +606,7 @@ BYTE WINAPI ReadIoPortByte(WORD port)
     return (BYTE)value;
 }
 
-WORD WINAPI ReadIoPortWord(WORD port)
+WINRING0_API WORD ReadIoPortWord(WORD port)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -623,7 +623,7 @@ WORD WINAPI ReadIoPortWord(WORD port)
     return value;
 }
 
-DWORD WINAPI ReadIoPortDword(WORD port)
+WINRING0_API DWORD ReadIoPortDword(WORD port)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -642,7 +642,7 @@ DWORD WINAPI ReadIoPortDword(WORD port)
     return value;
 }
 
-BOOL WINAPI ReadIoPortByteEx(WORD port, PBYTE value)
+WINRING0_API BOOL ReadIoPortByteEx(WORD port, PBYTE value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -671,7 +671,7 @@ BOOL WINAPI ReadIoPortByteEx(WORD port, PBYTE value)
     }
 }
 
-BOOL WINAPI ReadIoPortWordEx(WORD port, PWORD value)
+WINRING0_API BOOL ReadIoPortWordEx(WORD port, PWORD value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -700,7 +700,7 @@ BOOL WINAPI ReadIoPortWordEx(WORD port, PWORD value)
     }
 }
 
-BOOL WINAPI ReadIoPortDwordEx(WORD port, PDWORD value)
+WINRING0_API BOOL ReadIoPortDwordEx(WORD port, PDWORD value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -730,7 +730,7 @@ BOOL WINAPI ReadIoPortDwordEx(WORD port, PDWORD value)
     }
 }
 
-VOID WINAPI WriteIoPortByte(WORD port, BYTE value)
+WINRING0_API VOID WriteIoPortByte(WORD port, BYTE value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -749,7 +749,7 @@ VOID WINAPI WriteIoPortByte(WORD port, BYTE value)
     result = DeviceIoControl(gHandle, IOCTL_OLS_WRITE_IO_PORT_BYTE, &inBuf, length, NULL, 0, &returnedLength, NULL);
 }
 
-VOID WINAPI WriteIoPortWord(WORD port, WORD value)
+WINRING0_API VOID WriteIoPortWord(WORD port, WORD value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -768,7 +768,7 @@ VOID WINAPI WriteIoPortWord(WORD port, WORD value)
     result = DeviceIoControl(gHandle, IOCTL_OLS_WRITE_IO_PORT_WORD, &inBuf, length, NULL, 0, &returnedLength, NULL);
 }
 
-VOID WINAPI WriteIoPortDword(WORD port, DWORD value)
+WINRING0_API VOID WriteIoPortDword(WORD port, DWORD value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -787,7 +787,7 @@ VOID WINAPI WriteIoPortDword(WORD port, DWORD value)
     result = DeviceIoControl(gHandle, IOCTL_OLS_WRITE_IO_PORT_DWORD, &inBuf, length, NULL, 0, &returnedLength, NULL);
 }
 
-BOOL WINAPI WriteIoPortByteEx(WORD port, BYTE value)
+WINRING0_API BOOL WriteIoPortByteEx(WORD port, BYTE value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -815,7 +815,7 @@ BOOL WINAPI WriteIoPortByteEx(WORD port, BYTE value)
     }
 }
 
-BOOL WINAPI WriteIoPortWordEx(WORD port, WORD value)
+WINRING0_API BOOL WriteIoPortWordEx(WORD port, WORD value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -843,7 +843,7 @@ BOOL WINAPI WriteIoPortWordEx(WORD port, WORD value)
     }
 }
 
-BOOL WINAPI WriteIoPortDwordEx(WORD port, DWORD value)
+WINRING0_API BOOL WriteIoPortDwordEx(WORD port, DWORD value)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -870,7 +870,7 @@ BOOL WINAPI WriteIoPortDwordEx(WORD port, DWORD value)
     }
 }
 
-BOOL pciConfigRead(DWORD pciAddress, DWORD regAddress, PBYTE value, DWORD size, PDWORD error)
+WINRING0_API BOOL pciConfigRead(DWORD pciAddress, DWORD regAddress, PBYTE value, DWORD size, PDWORD error)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -915,7 +915,7 @@ BOOL pciConfigRead(DWORD pciAddress, DWORD regAddress, PBYTE value, DWORD size, 
     }
 }
 
-BYTE WINAPI ReadPciConfigByte(DWORD pciAddress, BYTE regAddress)
+WINRING0_API BYTE ReadPciConfigByte(DWORD pciAddress, BYTE regAddress)
 {
     BYTE ret;
     if (pciConfigRead(pciAddress, regAddress, (PBYTE)&ret, sizeof(ret), NULL))
@@ -928,7 +928,7 @@ BYTE WINAPI ReadPciConfigByte(DWORD pciAddress, BYTE regAddress)
     }
 }
 
-WORD WINAPI ReadPciConfigWord(DWORD pciAddress, BYTE regAddress)
+WINRING0_API WORD ReadPciConfigWord(DWORD pciAddress, BYTE regAddress)
 {
     WORD ret;
     if (pciConfigRead(pciAddress, regAddress, (PBYTE)&ret, sizeof(ret), NULL))
@@ -941,7 +941,7 @@ WORD WINAPI ReadPciConfigWord(DWORD pciAddress, BYTE regAddress)
     }
 }
 
-DWORD WINAPI ReadPciConfigDword(DWORD pciAddress, BYTE regAddress)
+WINRING0_API DWORD ReadPciConfigDword(DWORD pciAddress, BYTE regAddress)
 {
     DWORD ret;
     if (pciConfigRead(pciAddress, regAddress, (PBYTE)&ret, sizeof(ret), NULL))
@@ -954,22 +954,22 @@ DWORD WINAPI ReadPciConfigDword(DWORD pciAddress, BYTE regAddress)
     }
 }
 
-BOOL WINAPI ReadPciConfigByteEx(DWORD pciAddress, DWORD regAddress, PBYTE value)
+WINRING0_API BOOL ReadPciConfigByteEx(DWORD pciAddress, DWORD regAddress, PBYTE value)
 {
     return pciConfigRead(pciAddress, regAddress, (PBYTE)value, sizeof(BYTE), NULL);
 }
 
-BOOL WINAPI ReadPciConfigWordEx(DWORD pciAddress, DWORD regAddress, PWORD value)
+WINRING0_API BOOL ReadPciConfigWordEx(DWORD pciAddress, DWORD regAddress, PWORD value)
 {
     return pciConfigRead(pciAddress, regAddress, (PBYTE)value, sizeof(WORD), NULL);
 }
 
-BOOL WINAPI ReadPciConfigDwordEx(DWORD pciAddress, DWORD regAddress, PDWORD value)
+WINRING0_API BOOL ReadPciConfigDwordEx(DWORD pciAddress, DWORD regAddress, PDWORD value)
 {
     return pciConfigRead(pciAddress, regAddress, (PBYTE)value, sizeof(DWORD), NULL);
 }
 
-BOOL pciConfigWrite(DWORD pciAddress, DWORD regAddress, PBYTE value, DWORD size)
+WINRING0_API BOOL pciConfigWrite(DWORD pciAddress, DWORD regAddress, PBYTE value, DWORD size)
 {
     DWORD returnedLength = 0;
     BOOL result = FALSE;
@@ -1016,42 +1016,42 @@ BOOL pciConfigWrite(DWORD pciAddress, DWORD regAddress, PBYTE value, DWORD size)
     }
 }
 
-VOID WINAPI WritePciConfigByte(DWORD pciAddress, BYTE regAddress, BYTE value)
+WINRING0_API VOID WritePciConfigByte(DWORD pciAddress, BYTE regAddress, BYTE value)
 {
     pciConfigWrite(pciAddress, regAddress, (PBYTE)&value, sizeof(value));
 }
 
-VOID WINAPI WritePciConfigWord(DWORD pciAddress, BYTE regAddress, WORD value)
+WINRING0_API VOID WritePciConfigWord(DWORD pciAddress, BYTE regAddress, WORD value)
 {
     pciConfigWrite(pciAddress, regAddress, (PBYTE)&value, sizeof(value));
 }
 
-VOID WINAPI WritePciConfigDword(DWORD pciAddress, BYTE regAddress, DWORD value)
+WINRING0_API VOID WritePciConfigDword(DWORD pciAddress, BYTE regAddress, DWORD value)
 {
     pciConfigWrite(pciAddress, regAddress, (PBYTE)&value, sizeof(value));
 }
 
-BOOL WINAPI WritePciConfigByteEx(DWORD pciAddress, DWORD regAddress, BYTE value)
+WINRING0_API BOOL WritePciConfigByteEx(DWORD pciAddress, DWORD regAddress, BYTE value)
 {
     return pciConfigWrite(pciAddress, regAddress, (PBYTE)&value, sizeof(value));
 }
 
-BOOL WINAPI WritePciConfigWordEx(DWORD pciAddress, DWORD regAddress, WORD value)
+WINRING0_API BOOL WritePciConfigWordEx(DWORD pciAddress, DWORD regAddress, WORD value)
 {
     return pciConfigWrite(pciAddress, regAddress, (PBYTE)&value, sizeof(value));
 }
 
-BOOL WINAPI WritePciConfigDwordEx(DWORD pciAddress, DWORD regAddress, DWORD value)
+WINRING0_API BOOL WritePciConfigDwordEx(DWORD pciAddress, DWORD regAddress, DWORD value)
 {
     return pciConfigWrite(pciAddress, regAddress, (PBYTE)&value, sizeof(value));
 }
 
-VOID WINAPI SetPciMaxBusIndex(BYTE max)
+WINRING0_API VOID SetPciMaxBusIndex(BYTE max)
 {
     gPciMaxNumberOfBus = max;
 }
 
-DWORD WINAPI FindPciDeviceById(WORD vendorId, WORD deviceId, BYTE index)
+WINRING0_API DWORD FindPciDeviceById(WORD vendorId, WORD deviceId, BYTE index)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -1124,7 +1124,7 @@ DWORD WINAPI FindPciDeviceById(WORD vendorId, WORD deviceId, BYTE index)
     return 0xFFFFFFFF;
 }
 
-DWORD WINAPI FindPciDeviceByClass(BYTE baseClass, BYTE subClass, BYTE programIf, BYTE index)
+WINRING0_API DWORD FindPciDeviceByClass(BYTE baseClass, BYTE subClass, BYTE programIf, BYTE index)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -1192,7 +1192,7 @@ DWORD WINAPI FindPciDeviceByClass(BYTE baseClass, BYTE subClass, BYTE programIf,
 }
 
 #ifdef _PHYSICAL_MEMORY_SUPPORT
-DWORD WINAPI ReadDmiMemory(PBYTE buffer, DWORD count, DWORD unitSize)
+WINRING0_API DWORD ReadDmiMemory(PBYTE buffer, DWORD count, DWORD unitSize)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -1241,7 +1241,7 @@ DWORD WINAPI ReadDmiMemory(PBYTE buffer, DWORD count, DWORD unitSize)
     }
 }
 
-DWORD WINAPI ReadPhysicalMemory(DWORD_PTR address, PBYTE buffer, DWORD count, DWORD unitSize)
+WINRING0_API DWORD ReadPhysicalMemory(DWORD_PTR address, PBYTE buffer, DWORD count, DWORD unitSize)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {
@@ -1285,7 +1285,7 @@ DWORD WINAPI ReadPhysicalMemory(DWORD_PTR address, PBYTE buffer, DWORD count, DW
     }
 }
 
-DWORD WINAPI WritePhysicalMemory(DWORD_PTR address, PBYTE buffer, DWORD count, DWORD unitSize)
+WINRING0_API DWORD WritePhysicalMemory(DWORD_PTR address, PBYTE buffer, DWORD count, DWORD unitSize)
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {

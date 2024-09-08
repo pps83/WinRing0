@@ -411,7 +411,7 @@ void COlsSampleDlg::OnBnClickedRefresh()
     Refresh();
 }
 
-BOOL IsNT()
+static BOOL IsNT()
 {
     OSVERSIONINFO osvi;
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
