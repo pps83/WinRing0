@@ -24,9 +24,6 @@ void Deinitialize();
 DWORD InitDriverInfo();
 
 BOOL OpenDriver();
-BOOL LoadDriver(TCHAR* DriverFileName, TCHAR* DriverId);
-BOOL UnloadDriver(TCHAR* DriverId);
-DWORD GetRefCount();
 
 BOOL IsNT();
 BOOL IsWow64();

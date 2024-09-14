@@ -43,6 +43,9 @@ WINRING0_API DWORD GetDriverVersion(PBYTE major, // major version
 // Device Driver Type, defined OLS_DRIVER_TYPE_****
 WINRING0_API DWORD GetDriverType();
 
+// Ref count of the driver I/O file
+WINRING0_API DWORD GetRefCount();
+
 // TRUE: success, FALSE: failure
 WINRING0_API BOOL InitializeOls();
 

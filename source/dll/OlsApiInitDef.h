@@ -13,6 +13,7 @@ typedef DWORD (*_GetDllStatus)();
 typedef DWORD (*_GetDllVersion)(PBYTE major, PBYTE minor, PBYTE revision, PBYTE release);
 typedef DWORD (*_GetDriverVersion)(PBYTE major, PBYTE minor, PBYTE revision, PBYTE release);
 typedef DWORD (*_GetDriverType)();
+typedef DWORD (*_GetRefCount)();
 
 typedef BOOL (*_InitializeOls)();
 typedef VOID (*_DeinitializeOls)();

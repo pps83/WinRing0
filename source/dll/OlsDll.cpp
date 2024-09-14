@@ -174,7 +174,7 @@ BOOL OpenDriver()
     return TRUE;
 }
 
-DWORD GetRefCount()
+WINRING0_API DWORD GetRefCount()
 {
     if (gHandle == INVALID_HANDLE_VALUE)
     {

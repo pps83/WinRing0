@@ -19,6 +19,7 @@ _GetDllStatus GetDllStatus = NULL;
 _GetDllVersion GetDllVersion = NULL;
 _GetDriverVersion GetDriverVersion = NULL;
 _GetDriverType GetDriverType = NULL;
+_GetRefCount GetRefCount = NULL;
 
 _InitializeOls InitializeOls = NULL;
 _DeinitializeOls DeinitializeOls = NULL;
@@ -120,6 +121,7 @@ BOOL InitOpenLibSys(HMODULE* hModule)
     GetDllVersion = (_GetDllVersion)GetProcAddress(hmod, "GetDllVersion");
     GetDriverVersion = (_GetDriverVersion)GetProcAddress(hmod, "GetDriverVersion");
     GetDriverType = (_GetDriverType)GetProcAddress(hmod, "GetDriverType");
+    GetRefCount = (_GetRefCount)GetProcAddress(hmod, "GetRefCount");
 
     InitializeOls = (_InitializeOls)GetProcAddress(hmod, "InitializeOls");
     DeinitializeOls = (_DeinitializeOls)GetProcAddress(hmod, "DeinitializeOls");
@@ -189,15 +191,16 @@ BOOL InitOpenLibSys(HMODULE* hModule)
     WritePhysicalMemory = (_WritePhysicalMemory)GetProcAddress(hmod, "WritePhysicalMemory");
 #endif
 
-    if (!(GetDllStatus && GetDllVersion && GetDriverVersion && GetDriverType && InitializeOls && DeinitializeOls &&
-            IsCpuid && IsMsr && IsTsc && Hlt && HltTx && HltPx && Rdmsr && RdmsrTx && RdmsrPx && Wrmsr && WrmsrTx &&
-            WrmsrPx && Rdpmc && RdpmcTx && RdpmcPx && Cpuid && CpuidTx && CpuidPx && Rdtsc && RdtscTx && RdtscPx &&
-            ReadIoPortByte && ReadIoPortWord && ReadIoPortDword && ReadIoPortByteEx && ReadIoPortWordEx &&
-            ReadIoPortDwordEx && WriteIoPortByte && WriteIoPortWord && WriteIoPortDword && WriteIoPortByteEx &&
-            WriteIoPortWordEx && WriteIoPortDwordEx && SetPciMaxBusIndex && ReadPciConfigByte && ReadPciConfigWord &&
-            ReadPciConfigDword && ReadPciConfigByteEx && ReadPciConfigWordEx && ReadPciConfigDwordEx &&
-            WritePciConfigByte && WritePciConfigWord && WritePciConfigDword && WritePciConfigByteEx &&
-            WritePciConfigWordEx && WritePciConfigDwordEx && FindPciDeviceById && FindPciDeviceByClass
+    if (!(GetDllStatus && GetDllVersion && GetDriverVersion && GetDriverType && GetRefCount && InitializeOls &&
+            DeinitializeOls && IsCpuid && IsMsr && IsTsc && Hlt && HltTx && HltPx && Rdmsr && RdmsrTx && RdmsrPx &&
+            Wrmsr && WrmsrTx && WrmsrPx && Rdpmc && RdpmcTx && RdpmcPx && Cpuid && CpuidTx && CpuidPx && Rdtsc &&
+            RdtscTx && RdtscPx && ReadIoPortByte && ReadIoPortWord && ReadIoPortDword && ReadIoPortByteEx &&
+            ReadIoPortWordEx && ReadIoPortDwordEx && WriteIoPortByte && WriteIoPortWord && WriteIoPortDword &&
+            WriteIoPortByteEx && WriteIoPortWordEx && WriteIoPortDwordEx && SetPciMaxBusIndex && ReadPciConfigByte &&
+            ReadPciConfigWord && ReadPciConfigDword && ReadPciConfigByteEx && ReadPciConfigWordEx &&
+            ReadPciConfigDwordEx && WritePciConfigByte && WritePciConfigWord && WritePciConfigDword &&
+            WritePciConfigByteEx && WritePciConfigWordEx && WritePciConfigDwordEx && FindPciDeviceById &&
+            FindPciDeviceByClass
 #ifdef _PHYSICAL_MEMORY_SUPPORT
             && ReadDmiMemory && ReadPhysicalMemory && WritePhysicalMemory
 #endif

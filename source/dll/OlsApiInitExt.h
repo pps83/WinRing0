@@ -15,6 +15,7 @@ extern _GetDllStatus GetDllStatus;
 extern _GetDllVersion GetDllVersion;
 extern _GetDriverVersion GetDriverVersion;
 extern _GetDriverType GetDriverType;
+extern _GetRefCount GetRefCount;
 
 extern _InitializeOls InitializeOls;
 extern _DeinitializeOls DeinitializeOls;
