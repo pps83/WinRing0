@@ -12,7 +12,7 @@
 #include "OlsDef.h"
 #include "OlsApiInitDef.h"
 
-BOOL InitOpenLibSys(HMODULE* hModule);
+int InitOpenLibSys(HMODULE* hModule);
 BOOL DeinitOpenLibSys(HMODULE* hModule);
 
 _GetDllStatus GetDllStatus = NULL;
@@ -92,7 +92,7 @@ _ReadPhysicalMemory ReadPhysicalMemory = NULL;
 _WritePhysicalMemory WritePhysicalMemory = NULL;
 #endif
 
-BOOL InitOpenLibSys(HMODULE* hModule)
+int InitOpenLibSys(HMODULE* hModule)
 {
     HMODULE hmod = NULL;
 #if defined(_M_X64)
@@ -114,7 +114,7 @@ BOOL InitOpenLibSys(HMODULE* hModule)
     *hModule = hmod;
     if (hmod == NULL)
     {
-        return FALSE;
+        return 0;
     }
 
     GetDllStatus = (_GetDllStatus)GetProcAddress(hmod, "GetDllStatus");
@@ -206,7 +206,7 @@ BOOL InitOpenLibSys(HMODULE* hModule)
 #endif
             ))
     {
-        return FALSE;
+        return 0;
     }
 
     return InitializeOls();

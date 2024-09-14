@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <utility>
+
 #define OLS_MAJOR_VERSION 1
 #define OLS_MINOR_VERSION 3
 #define OLS_REVISION 1
@@ -19,7 +21,7 @@
 #define OLS_DRIVER_FILE_NAME_WIN_NT _T("WinRing0.sys")
 #define OLS_DRIVER_FILE_NAME_WIN_NT_X64 _T("WinRing0x64.sys")
 
-DWORD Initialize();
+std::pair<DWORD, bool> Initialize();
 void Deinitialize();
 DWORD InitDriverInfo();
 

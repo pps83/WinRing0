@@ -15,7 +15,7 @@ typedef DWORD (*_GetDriverVersion)(PBYTE major, PBYTE minor, PBYTE revision, PBY
 typedef DWORD (*_GetDriverType)();
 typedef DWORD (*_GetRefCount)();
 
-typedef BOOL (*_InitializeOls)();
+typedef int (*_InitializeOls)();
 typedef VOID (*_DeinitializeOls)();
 
 typedef BOOL (*_IsCpuid)();

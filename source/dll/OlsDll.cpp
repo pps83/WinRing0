@@ -40,8 +40,9 @@ static BOOL IsX64();
 static BOOL IsFileExist(LPCTSTR fileName);
 static BOOL IsOnNetworkDrive(LPCTSTR fileName);
 
-WINRING0_API BOOL InitializeOls()
+WINRING0_API int InitializeOls()
 {
+    bool loaded = false;
     if (gInitDll == FALSE)
     {
         gIsNT = IsNT();
@@ -58,17 +59,17 @@ WINRING0_API BOOL InitializeOls()
             // Retry, Max 1000ms
             for (int i = 0; i < 4; i++)
             {
-                gDllStatus = Initialize();
+                std::pair<DWORD, bool> init = Initialize();
+                gDllStatus = init.first;
+                loaded = init.second;
                 if (gDllStatus == OLS_DLL_NO_ERROR)
-                {
                     break;
-                }
                 Sleep(100 * i);
             }
         }
         gInitDll = TRUE;
     }
-    return (BOOL)(gDllStatus == OLS_DLL_NO_ERROR);
+    return gDllStatus == OLS_DLL_NO_ERROR ? (loaded ? 2 : 1) : 0;
 }
 
 WINRING0_API VOID DeinitializeOls()
@@ -108,57 +109,42 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     return TRUE;
 }
 
-DWORD Initialize()
+std::pair<DWORD, bool> Initialize()
 {
     TCHAR dir[MAX_PATH];
     TCHAR* ptr;
 
     GetModuleFileName(NULL, dir, MAX_PATH);
     if ((ptr = _tcsrchr(dir, '\\')) != NULL)
-    {
         *ptr = '\0';
-    }
     wsprintf(gDriverPath, _T("%s\\%s"), dir, gDriverFileName);
 
     if (IsFileExist(gDriverPath) == FALSE)
-    {
-        return OLS_DLL_DRIVER_NOT_FOUND;
-    }
+        return {OLS_DLL_DRIVER_NOT_FOUND, false};
 
     if (IsOnNetworkDrive(gDriverPath) == TRUE)
-    {
-        return OLS_DLL_DRIVER_NOT_LOADED_ON_NETWORK;
-    }
+        return {OLS_DLL_DRIVER_NOT_LOADED_ON_NETWORK, false};
 
     if (gIsNT)
     {
         if (OpenDriver())
-        {
-            return OLS_DLL_NO_ERROR;
-        }
+            return {OLS_DLL_NO_ERROR, false};
 
         ManageDriver(OLS_DRIVER_ID, gDriverPath, OLS_DRIVER_REMOVE);
         if (!ManageDriver(OLS_DRIVER_ID, gDriverPath, OLS_DRIVER_INSTALL))
         {
             ManageDriver(OLS_DRIVER_ID, gDriverPath, OLS_DRIVER_REMOVE);
-            return OLS_DLL_DRIVER_NOT_LOADED;
+            return {OLS_DLL_DRIVER_NOT_LOADED, false};
         }
 
         if (OpenDriver())
-        {
-            return OLS_DLL_NO_ERROR;
-        }
-        return OLS_DLL_DRIVER_NOT_LOADED;
+            return {OLS_DLL_NO_ERROR, true}; // loaded driver
+        return {OLS_DLL_DRIVER_NOT_LOADED, false};
     }
     else
     {
         gHandle = INVALID_HANDLE_VALUE;
-
-        if (gHandle == INVALID_HANDLE_VALUE)
-        {
-            return OLS_DLL_DRIVER_NOT_LOADED;
-        }
-        return OLS_DLL_NO_ERROR;
+        return {OLS_DLL_NO_ERROR, false};
     }
 }
 

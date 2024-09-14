@@ -46,8 +46,8 @@ WINRING0_API DWORD GetDriverType();
 // Ref count of the driver I/O file
 WINRING0_API DWORD GetRefCount();
 
-// TRUE: success, FALSE: failure
-WINRING0_API BOOL InitializeOls();
+// 0: failure, 1: success, 2: success (driver loaded)
+WINRING0_API int InitializeOls();
 
 WINRING0_API VOID DeinitializeOls();
 
